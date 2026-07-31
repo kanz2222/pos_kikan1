@@ -1,0 +1,163 @@
+<!-- Navbar POS Core -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container px-3">
+    <a class="navbar-brand" href="#">
+        <i class="bi bi-terminal-fill text-white"></i> Aplikasi POS
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Menu Utama di Sebelah Kiri -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('dashboard') }}">
+            <i class="bi bi-grid-1x2-fill"></i> Halaman Utama
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+            <i class="bi bi-people-fill"></i> Akun
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('produk*') ? 'active' : '' }}" href="{{ route('produk.index') }}">
+            <i class="bi bi-box-seam-fill"></i> Produk
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('penjualan*') ? 'active' : '' }}" href="{{ route('penjualan.index') }}">
+            <i class="bi bi-cart-check-fill"></i> Penjualan
+          </a>
+        </li>
+      </ul>
+
+      <!-- Tombol Logout di Sebelah Kanan -->
+      <div class="d-flex mt-3 mt-lg-0">
+        <form action="{{ route('logout') }}" method="POST" class="m-0">
+          @csrf
+          <button type="submit" class="btn btn-logout">
+            <i class="bi bi-box-arrow-right"></i> Keluar
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Custom Modern Vibrant Dark Palette with Black-Emerald Accents Theme Styling for Navbar -->
+<style>
+    /* Modern Gradient Navbar Styling */
+    .navbar-custom {
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.95) 0%, rgba(6, 95, 70, 0.95) 35%, rgba(30, 27, 75, 0.95) 70%, rgba(15, 23, 42, 0.95) 100%) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(52, 211, 153, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        position: relative;
+    }
+
+    /* Accent bottom border effect */
+    .navbar-custom::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #10b981 0%, #6366f1 50%, #ec4899 100%);
+        opacity: 0.9;
+    }
+
+    /* Brand & Logo */
+    .navbar-custom .navbar-brand {
+        color: #ffffff !important;
+        font-weight: 800;
+        letter-spacing: 0.75px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Link Navigasi */
+    .navbar-custom .navbar-nav .nav-link {
+        color: rgba(248, 250, 252, 0.8) !important;
+        transition: all 0.2s ease-in-out;
+        border-radius: 8px;
+        padding: 8px 16px;
+        margin: 0 2px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    /* Hover & Active State */
+    .navbar-custom .navbar-nav .nav-link:hover {
+        color: #ffffff !important;
+        background-color: rgba(16, 185, 129, 0.15);
+    }
+
+    .navbar-custom .navbar-nav .nav-link.active {
+        color: #34d399 !important;
+        background-color: rgba(16, 185, 129, 0.2);
+        border: 1px solid rgba(16, 185, 129, 0.4);
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+    }
+
+    /* Mobile Hamburger Button */
+    .navbar-custom .navbar-toggler {
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        border-radius: 8px;
+        padding: 6px 12px;
+        background-color: rgba(16, 185, 129, 0.1);
+    }
+
+    .navbar-custom .navbar-toggler:focus {
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+    }
+
+    .navbar-custom .navbar-toggler-icon {
+        filter: brightness(0) invert(1);
+    }
+
+    /* Logout Button */
+    .navbar-custom .btn-logout {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: #f87171;
+        font-weight: 700;
+        border-radius: 8px;
+        padding: 8px 18px;
+        transition: all 0.2s ease-in-out;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .navbar-custom .btn-logout:hover {
+        background-color: #dc2626;
+        color: #ffffff;
+        border-color: #dc2626;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+        transform: translateY(-1px);
+    }
+
+    .navbar-custom .btn-logout:active {
+        transform: translateY(0);
+    }
+</style>
