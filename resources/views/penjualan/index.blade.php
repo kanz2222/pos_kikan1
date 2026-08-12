@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Penjualan')
+@section('title', 'Daftar Penjualan')
 
 @section('content')
 
@@ -8,311 +8,336 @@
 
 <style>
     body {
-        background-color: #060a12;
-        background-image: radial-gradient(circle at 10% 20%, rgba(0, 210, 133, 0.05) 0%, transparent 40%),
-                          radial-gradient(circle at 90% 80%, rgba(13, 110, 253, 0.05) 0%, transparent 40%);
+        background: linear-gradient(135deg, #0d322b 0%, #0f172a 50%, #1e1b4b 100%);
+        background-attachment: fixed;
         color: #f8fafc;
-    }
-
-    .page-wrapper {
-        min-height: 100vh;
-        padding: 2.5rem 0;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    /* Hero Banner Dark Theme */
-    .hero-banner-sale {
-        background: #0b1329;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        color: #ffffff;
-        padding: 2.5rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        margin-bottom: 2rem;
-        position: relative;
-        overflow: hidden;
+    .page-wrapper {
+        background: linear-gradient(135deg, #0d322b 0%, #0f172a 50%, #1e1b4b 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 2.5rem 0;
     }
 
+    /* Hero Banner Base Style */
+    .hero-banner-sale {
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        color: #ffffff;
+        padding: 2.5rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        margin-bottom: 2rem;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Animasi Bar Gradasi Atas */
     .hero-banner-sale::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #00d285 0%, #0d6efd 50%, #d63384 100%);
+        height: 4px;
+        background: linear-gradient(90deg, #10b981 0%, #06b6d4 50%, #ec4899 100%);
+        background-size: 200% 100%;
+        animation: gradientShift 6s ease infinite;
     }
 
-    .hero-banner-sale .text-muted-custom {
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .hero-banner-sale h1 {
+        color: #ffffff !important;
+    }
+
+    .hero-banner-sale p {
         color: #94a3b8 !important;
     }
 
-    /* Cards Dark Theme */
+    /* Custom Cards */
     .custom-card {
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        background: #0b1329;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        background: #0f172a;
+        backdrop-filter: blur(12px);
         overflow: hidden;
-        transition: all 0.25s ease-in-out;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .custom-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981 0%, #06b6d4 50%, #ec4899 100%);
+        background-size: 200% 100%;
+        animation: gradientShift 6s ease infinite;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
     }
 
     .custom-card:hover {
-        border-color: rgba(0, 210, 133, 0.3);
+        transform: translateY(-3px);
+        border-color: rgba(16, 185, 129, 0.5);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.25);
     }
 
-    /* Search Box Dark Theme */
-    .search-box {
-        background: #0b1329;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+    .custom-card:hover::before {
+        opacity: 1;
     }
 
-    .search-input-group {
-        background-color: #060a12 !important;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
-        overflow: hidden;
+    /* Search Inputs & Buttons */
+    .search-input {
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: #1e293b;
+        color: #ffffff;
+        transition: all 0.25s ease;
     }
 
-    .search-input-group input {
-        background-color: #060a12 !important;
-        color: #f8fafc !important;
+    .search-input:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        background-color: #1e293b;
+        color: #ffffff;
     }
 
-    .search-input-group input::placeholder {
+    .search-input::placeholder {
         color: #64748b;
     }
 
-    .search-input-group .input-group-text {
-        background-color: #060a12 !important;
+    .btn-search-custom {
+        background: #10b981;
         border: none;
-        color: #64748b;
+        color: #000000;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 0.75rem 1.25rem;
+        transition: all 0.2s ease;
     }
 
-    /* Table Styling Overrides (Fixing White Backgrounds) */
+    .btn-search-custom:hover {
+        background: #059669;
+        color: #ffffff;
+    }
+
+    /* Table Styling */
     .table-custom {
-        --bs-table-bg: transparent !important;
-        --bs-table-accent-bg: transparent !important;
-        --bs-table-striped-bg: transparent !important;
+        color: #f8fafc;
         background-color: transparent !important;
-        color: #cbd5e1 !important;
         margin-bottom: 0;
     }
 
     .table-custom thead {
-        background-color: #0d1730 !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: #1e293b !important;
     }
 
     .table-custom thead th {
         border: none;
         font-weight: 700;
-        letter-spacing: 0.75px;
-        text-transform: uppercase;
         font-size: 0.75rem;
-        color: #64748b !important;
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
+        color: #94a3b8 !important;
+        background-color: #1e293b !important;
         padding: 1.1rem 1.25rem;
-        background-color: #0d1730 !important;
     }
 
     .table-custom tbody tr {
-        background-color: transparent !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         transition: background-color 0.2s ease;
     }
 
     .table-custom tbody tr:hover {
-        background-color: rgba(255, 255, 255, 0.02) !important;
+        background-color: rgba(255, 255, 255, 0.03) !important;
     }
 
+    /* Override background bawaan Bootstrap pada th/td */
+    .table-custom th,
     .table-custom td {
-        padding: 1.1rem 1.25rem;
-        border: none;
-        background-color: transparent !important;
+        border-color: rgba(255, 255, 255, 0.05) !important;
         color: #e2e8f0 !important;
+        background-color: transparent !important;
+        padding: 1.1rem 1.25rem;
     }
 
     /* Badges */
-    .badge-tag-header {
-        background-color: rgba(0, 210, 133, 0.12) !important;
-        color: #00d285 !important;
-        border: 1px solid rgba(0, 210, 133, 0.3);
-    }
-
     .badge-total-bayar {
-        background-color: rgba(0, 210, 133, 0.12);
-        color: #00d285;
-        border: 1px solid rgba(0, 210, 133, 0.25);
+        background-color: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
         padding: 6px 12px;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 700;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
 
     .badge-method {
-        background: rgba(13, 110, 253, 0.12);
-        color: #6ea8fe;
-        border: 1px solid rgba(13, 110, 253, 0.25);
+        background: rgba(6, 182, 212, 0.15);
+        color: #22d3ee;
+        border: 1px solid rgba(6, 182, 212, 0.3);
         padding: 6px 12px;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 700;
         font-size: 0.8rem;
     }
 
     .badge-status {
-        background: rgba(111, 66, 193, 0.12);
-        color: #c599ff;
-        border: 1px solid rgba(111, 66, 193, 0.25);
+        background: rgba(168, 85, 247, 0.15);
+        color: #c084fc;
+        border: 1px solid rgba(168, 85, 247, 0.3);
         padding: 6px 12px;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 700;
         font-size: 0.8rem;
     }
 
-    /* Buttons Dark Modern Theme */
+    /* Buttons */
     .btn-create-sale {
-        background-color: #00d285;
-        color: #060a12;
-        font-weight: 700;
-        border-radius: 8px;
+        background: #10b981;
         border: none;
+        color: #000000;
+        font-weight: 700;
+        border-radius: 10px;
         padding: 0.75rem 1.5rem;
-        box-shadow: 0 4px 15px rgba(0, 210, 133, 0.25);
-        transition: all 0.2s ease-in-out;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        transition: all 0.25s ease-in-out;
     }
 
     .btn-create-sale:hover {
-        background-color: #00b874;
-        color: #060a12;
-        transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(0, 210, 133, 0.35);
+        background: #059669;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
     }
 
-    .btn-search-custom {
-        background-color: #00d285;
-        color: #060a12;
-        font-weight: 700;
-        border: none;
-        border-radius: 6px !important;
-    }
-
-    .btn-search-custom:hover {
-        background-color: #00b874;
-        color: #060a12;
+    .btn-action-custom {
+        border-radius: 8px;
+        padding: 5px 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
     }
 
     .btn-detail-custom {
-        background: rgba(13, 202, 240, 0.12);
-        border: 1px solid rgba(13, 202, 240, 0.3);
-        color: #6edff6;
-        font-weight: 600;
-        border-radius: 6px;
-        padding: 5px 12px;
-        font-size: 0.8rem;
-        transition: all 0.2s ease-in-out;
+        background: rgba(6, 182, 212, 0.15);
+        border: 1px solid rgba(6, 182, 212, 0.3);
+        color: #22d3ee;
     }
 
     .btn-detail-custom:hover {
-        background-color: #0dcaf0;
-        color: #000000;
-    }
-
-    .btn-edit-custom {
-        background: rgba(255, 193, 7, 0.12);
-        border: 1px solid rgba(255, 193, 7, 0.3);
-        color: #ffda6a;
-        font-weight: 600;
-        border-radius: 6px;
-        padding: 5px 12px;
-        font-size: 0.8rem;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .btn-edit-custom:hover {
-        background-color: #ffc107;
-        color: #000000;
-    }
-
-    .btn-delete-custom {
-        background: rgba(220, 53, 69, 0.12);
-        border: 1px solid rgba(220, 53, 69, 0.3);
-        color: #ea868f;
-        font-weight: 600;
-        border-radius: 6px;
-        padding: 5px 12px;
-        font-size: 0.8rem;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .btn-delete-custom:hover {
-        background-color: #dc3545;
+        background: #0891b2;
         color: #ffffff;
     }
 
-    /* Custom Pagination Styling */
+    .btn-edit-custom {
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: #fbbf24;
+    }
+
+    .btn-edit-custom:hover {
+        background: #d97706;
+        color: #ffffff;
+    }
+
+    .btn-delete-custom {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #f87171;
+    }
+
+    .btn-delete-custom:hover {
+        background: #dc2626;
+        color: #ffffff;
+    }
+
+    /* Pagination */
     .pagination .page-link {
-        background-color: #0b1329 !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
+        background-color: #1e293b !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
         color: #94a3b8 !important;
     }
 
     .pagination .page-item.active .page-link {
-        background-color: #00d285 !important;
-        border-color: #00d285 !important;
-        color: #060a12 !important;
+        background-color: #10b981 !important;
+        border-color: #10b981 !important;
+        color: #000000 !important;
         font-weight: bold;
     }
 
     .pagination .page-link:hover {
-        background-color: rgba(0, 210, 133, 0.15) !important;
-        color: #00d285 !important;
+        background-color: rgba(16, 185, 129, 0.25) !important;
+        color: #10b981 !important;
     }
 </style>
 
 <div class="page-wrapper">
     <div class="container">
 
-        @if(session('errors'))
-            <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert" style="background-color: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); color: #ea868f;">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('errors') }}
+        {{-- Flash Messages --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show rounded-12 shadow-sm mb-4" role="alert" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3);">
+                <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error') || session('errors'))
+            <div class="alert alert-danger alert-dismissible fade show rounded-12 shadow-sm mb-4" role="alert" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') ?? session('errors') }}
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
         
-        <div class="hero-banner-sale p-4 p-md-5 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+        {{-- Hero Banner --}}
+        <div class="hero-banner-sale p-4 p-md-4 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div>
-                <span class="badge badge-tag-header px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm">
+                <span class="badge px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm" style="background: #10b981; color: #000000;">
                     <i class="bi bi-receipt-cutoff me-1"></i> Laporan Transaksi
                 </span>
-                <h1 class="display-6 fw-bold mb-1 text-white">Halaman Penjualan</h1>
-                <p class="text-muted-custom mb-0 fw-semibold">Kelola dan pantau seluruh transaksi penjualan harian dengan mudah.</p>
+                <h1 class="h3 fw-bold mb-1">Daftar Penjualan</h1>
+                <p class="mb-0 small">Kelola dan pantau seluruh transaksi penjualan harian dengan mudah.</p>
             </div>
             <div class="mt-3 mt-md-0">
-                <a href="{{ route('penjualan.create') }}" class="btn btn-create-sale btn-lg shadow-sm px-4">
-                    <i class="bi bi-plus-circle-fill me-2"></i> Tambah Penjualan
+                <a href="{{ route('penjualan.create') }}" class="btn btn-create-sale shadow-sm px-4">
+                    <i class="bi bi-plus-lg me-1"></i> Transaksi Baru
                 </a>
             </div>
         </div>
 
-        <div class="card custom-card p-3 mb-4 search-box">
+        {{-- Form Pencarian --}}
+        <div class="card custom-card p-3 mb-4">
             <form action="{{ route('penjualan.index') }}" method="GET">
-                <div class="input-group search-input-group p-1">
-                    <span class="input-group-text ps-3">
-                        <i class="bi bi-search"></i>
+                <div class="input-group">
+                    <span class="input-group-text search-input border-end-0">
+                        <i class="bi bi-search text-muted"></i>
                     </span>
                     <input 
                         type="text"
                         name="search"
-                        value="{{ request()->search }}"
-                        class="form-control border-0 py-2 px-2"
-                        placeholder="Search penjualan..."
+                        value="{{ request('search') }}"
+                        class="form-control search-input border-start-0 ps-0"
+                        placeholder="Cari transaksi berdasarkan nama kasir atau ID..."
                     >
-                    <button class="btn btn-search-custom px-4 ms-2" type="submit">
+                    <button class="btn btn-search-custom ms-2" type="submit">
                         Cari
                     </button>
                     @if(request('search'))
-                        <a href="{{ route('penjualan.index') }}" class="btn btn-outline-light px-3 ms-2 d-flex align-items-center" style="border-color: rgba(255,255,255,0.15); color: #94a3b8;">
+                        <a href="{{ route('penjualan.index') }}" class="btn btn-outline-light ms-2 d-flex align-items-center rounded-10">
                             Reset
                         </a>
                     @endif
@@ -320,47 +345,56 @@
             </form>
         </div>
 
+        {{-- Tabel Data Penjualan --}}
         <div class="card custom-card">
             <div class="table-responsive">
                 <table class="table table-custom align-middle mb-0">
                     <thead>
                         <tr>
-                            <th scope="col" class="ps-4 py-3">#</th>
-                            <th scope="col" class="py-3">Tanggal Transaksi</th>
-                            <th scope="col" class="py-3">Kasir</th>
-                            <th scope="col" class="py-3">Total Pembayaran</th>
-                            <th scope="col" class="py-3">Metode Pembayaran</th>
-                            <th scope="col" class="py-3">Status</th>
-                            <th scope="col" class="py-3 text-center">Aksi</th>
+                            <th scope="col" class="ps-4">#</th>
+                            <th scope="col">Tanggal Transaksi</th>
+                            <th scope="col">Kasir</th>
+                            <th scope="col">Total Pembayaran</th>
+                            <th scope="col">Metode Pembayaran</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-center">Aksi</th>
                         </tr> 
                     </thead>
                     <tbody>
                         @forelse($sales as $sale)
                         <tr>
-                            <th scope="row" class="ps-4 fw-bold" style="color: #64748b;">{{ $sales->firstItem() + $loop->index }}</th>
-                            <td>
-                                <span class="fw-semibold text-white"><i class="bi bi-calendar-event me-1" style="color: #00d285;"></i> {{ $sale->created_at->translatedFormat('d-m-Y H:i:s') }}</span>
+                            <td class="ps-4 fw-bold" style="color: #64748b;">
+                                {{ $sales->firstItem() + $loop->index }}
                             </td>
                             <td>
-                                <span class="fw-bold text-white"><i class="bi bi-person-badge me-1" style="color: #00d285;"></i> {{ $sale->user->name }}</span>
+                                <span class="fw-semibold text-light">
+                                    <i class="bi bi-calendar-event me-1 text-primary"></i> 
+                                    {{ $sale->created_at ? $sale->created_at->translatedFormat('d-m-Y H:i:s') : '-' }}
+                                </span>
                             </td>
                             <td>
-                                <span class="badge-total-bayar">Rp {{ number_format($sale->total_pembayaran, 0, ',', '.') }}</span>
+                                <span class="fw-bold text-light">
+                                    <i class="bi bi-person-badge me-1 text-primary"></i> 
+                                    {{ $sale->user->name ?? 'N/A' }}
+                                </span>
                             </td>
                             <td>
-                                <span class="badge-method">{{ $sale->metode_pembayaran }}</span>
+                                <span class="badge-total-bayar">Rp {{ number_format($sale->total_pembayaran ?? 0, 0, ',', '.') }}</span>
                             </td>
                             <td>
-                                <span class="badge-status">{{ $sale->status }}</span>
+                                <span class="badge-method">{{ $sale->metode_pembayaran ?? '-' }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-status">{{ $sale->status ?? '-' }}</span>
                             </td>
                             <td class="text-center">
                                 <div class="d-inline-flex gap-1 align-items-center justify-content-center">
-                                    <a href="{{ route('penjualan.show', $sale) }}" class="btn btn-detail-custom btn-sm">
+                                    <a href="{{ route('penjualan.show', $sale) }}" class="btn btn-action-custom btn-detail-custom">
                                         <i class="bi bi-eye-fill me-1"></i> Detail
                                     </a>
                                     
                                     @can('update', $sale)
-                                    <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-edit-custom btn-sm">
+                                    <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-action-custom btn-edit-custom">
                                         <i class="bi bi-pencil-square me-1"></i> Edit
                                     </a>
                                     @endcan
@@ -369,7 +403,7 @@
                                     <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline m-0">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-delete-custom btn-sm" onclick="return confirm('Apakah anda yakin akan menghapus penjualan ini?')">
+                                        <button type="submit" class="btn btn-action-custom btn-delete-custom" onclick="return confirm('Apakah Anda yakin ingin menghapus penjualan ini?')">
                                             <i class="bi bi-trash-fill me-1"></i> Hapus
                                         </button>
                                     </form>
@@ -380,9 +414,9 @@
                         @empty
                         <tr>
                             <td colspan="7" class="text-center py-5">
-                                <div class="fs-5" style="color: #64748b;">
-                                    <i class="bi bi-inbox fs-1 d-block mb-2" style="color: #00d285;"></i> 
-                                    Data Tidak Ditemukan
+                                <div class="text-muted">
+                                    <i class="bi bi-inbox fs-1 d-block mb-2 text-primary"></i> 
+                                    Data Transaksi Tidak Ditemukan
                                 </div>
                             </td>
                         </tr>
@@ -391,7 +425,7 @@
                 </table>
             </div>
 
-            <div class="card-footer bg-transparent border-0 py-4 px-4">
+            <div class="card-footer bg-transparent border-0 py-3 px-4">
                 <div class="d-flex justify-content-center justify-content-md-end">
                     {{ $sales->withQueryString()->links() }}
                 </div>

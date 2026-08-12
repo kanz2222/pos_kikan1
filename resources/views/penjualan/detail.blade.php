@@ -8,23 +8,22 @@
 
 <style>
     body {
-        background-color: #060a12;
-        background-image: radial-gradient(circle at 10% 20%, rgba(0, 210, 133, 0.05) 0%, transparent 40%),
-                          radial-gradient(circle at 90% 80%, rgba(13, 110, 253, 0.05) 0%, transparent 40%);
+        background: radial-gradient(circle at top left, #2b1055, #0a0b1e 70%);
+        background-attachment: fixed;
         color: #f8fafc;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     .page-wrapper {
         min-height: 100vh;
         padding: 2.5rem 0;
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    /* Hero Banner Dark Theme */
+    /* Hero Banner Theme */
     .hero-banner-sales {
-        background: #0b1329;
+        background: #111328;
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        border-radius: 16px;
         color: #ffffff;
         padding: 2.5rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -39,30 +38,50 @@
         left: 0;
         right: 0;
         height: 3px;
-        background: linear-gradient(90deg, #00d285 0%, #0d6efd 50%, #d63384 100%);
+        background: linear-gradient(90deg, #10b981 0%, #3b82f6 50%, #f43f5e 100%);
     }
 
     /* Cards Dark Theme */
     .custom-card {
         border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        border-radius: 16px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        background: #0b1329;
+        background: #111328;
         overflow: hidden;
     }
 
-    /* Table Styling Overrides */
+    /* Badge Pills Header */
+    .badge-tag-header {
+        background-color: rgba(16, 185, 129, 0.15) !important;
+        color: #10b981 !important;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 50rem;
+        font-size: 0.75rem;
+    }
+
+    .badge-total {
+        background-color: rgba(16, 185, 129, 0.12);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: inline-block;
+    }
+
+    /* Table Custom Styles */
     .table-custom {
         --bs-table-bg: transparent !important;
         --bs-table-accent-bg: transparent !important;
         --bs-table-striped-bg: transparent !important;
         background-color: transparent !important;
-        color: #cbd5e1 !important;
+        color: #94a3b8 !important;
         margin-bottom: 0;
     }
 
     .table-custom thead {
-        background-color: #0d1730 !important;
+        background-color: transparent !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -74,7 +93,7 @@
         font-size: 0.75rem;
         color: #64748b !important;
         padding: 1.1rem 1.25rem;
-        background-color: #0d1730 !important;
+        background-color: transparent !important;
     }
 
     .table-custom tbody tr {
@@ -84,41 +103,23 @@
     }
 
     .table-custom tbody tr:hover {
-        background-color: rgba(255, 255, 255, 0.02) !important;
+        background-color: rgba(255, 255, 255, 0.03) !important;
     }
 
     .table-custom td {
         padding: 1.1rem 1.25rem;
         border: none;
         background-color: transparent !important;
-        color: #e2e8f0 !important;
+        color: #cbd5e1 !important;
     }
 
     .product-img {
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
         object-fit: cover;
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        background-color: #060a12;
-    }
-
-    /* Badges & Labels */
-    .badge-tag-header {
-        background-color: rgba(0, 210, 133, 0.12) !important;
-        color: #00d285 !important;
-        border: 1px solid rgba(0, 210, 133, 0.3);
-    }
-
-    .badge-total {
-        background-color: rgba(0, 210, 133, 0.12);
-        color: #00d285;
-        border: 1px solid rgba(0, 210, 133, 0.25);
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-weight: 700;
-        font-size: 1.1rem;
-        display: inline-block;
+        background-color: #0a0b1e;
     }
 
     .info-label {
@@ -137,6 +138,20 @@
     }
 
     /* Buttons */
+    .btn-teal {
+        background-color: #10b981;
+        color: #ffffff;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-teal:hover {
+        background-color: #059669;
+        color: #ffffff;
+    }
+
     .btn-back-header {
         background-color: rgba(255, 255, 255, 0.08);
         color: #ffffff;
@@ -150,34 +165,19 @@
         background-color: rgba(255, 255, 255, 0.15);
         color: #ffffff;
     }
-
-    .btn-action-green {
-        background-color: #00d285;
-        color: #060a12;
-        font-weight: 700;
-        border-radius: 8px;
-        border: none;
-        box-shadow: 0 4px 15px rgba(0, 210, 133, 0.25);
-        transition: all 0.2s ease-in-out;
-    }
-
-    .btn-action-green:hover {
-        background-color: #00b874;
-        color: #060a12;
-        box-shadow: 0 6px 20px rgba(0, 210, 133, 0.35);
-    }
 </style>
 
 <div class="page-wrapper">
     <div class="container">
         
+        <!-- Header Banner -->
         <div class="hero-banner-sales p-4 p-md-5 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div>
-                <span class="badge badge-tag-header px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm">
+                <span class="badge badge-tag-header px-3 py-2 mb-3 d-inline-flex align-items-center">
                     <i class="bi bi-receipt me-1"></i> Transaksi POS
                 </span>
                 <h1 class="display-6 fw-bold mb-1 text-white">Rincian Penjualan</h1>
-                <p class="text-muted mb-0 fw-semibold" style="color: #94a3b8 !important;">Informasi lengkap transaksi dan daftar item produk yang dibeli.</p>
+                <p class="mb-0" style="color: #94a3b8 !important;">Informasi lengkap transaksi dan daftar item produk yang dibeli.</p>
             </div>
             <div class="mt-3 mt-md-0">
                 <a href="{{ route('penjualan.index') }}" class="btn btn-back-header px-4 py-2">
@@ -186,11 +186,12 @@
             </div>
         </div>
 
+        <!-- Transaction Details Card -->
         <div class="card custom-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-md-4 mb-3 mb-md-0">
                     <div class="info-label">Kasir / Petugas</div>
-                    <div class="info-value" style="color: #00d285;">
+                    <div class="info-value" style="color: #10b981;">
                         <i class="bi bi-person-circle me-1"></i> {{ $sale->user->name ?? 'Kasir' }}
                     </div>
                 </div>
@@ -209,9 +210,10 @@
             </div>
         </div>
 
+        <!-- Items Table Card -->
         <div class="card custom-card">
             <div class="card-header bg-transparent border-bottom border-secondary border-opacity-10 py-3 px-4 fw-bold fs-5 text-white">
-                <i class="bi bi-cart-check me-2" style="color: #00d285;"></i> Item Produk Terjual
+                <i class="bi bi-cart-check me-2" style="color: #10b981;"></i> Item Produk Terjual
             </div>
             <div class="table-responsive">
                 <table class="table table-custom align-middle mb-0">
@@ -240,14 +242,14 @@
                                 <span class="fw-bold text-white fs-6">{{ $item->produk->nama ?? 'Produk Dihapus' }}</span>
                             </td>
                             <td class="text-end pe-4">
-                                <span class="fw-bold" style="color: #00d285;">Rp {{ number_format($item->produk->harga_jual ?? 0, 0, ',', '.') }}</span>
+                                <span class="fw-bold" style="color: #10b981;">Rp {{ number_format($item->produk->harga_jual ?? 0, 0, ',', '.') }}</span>
                             </td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="4" class="text-center py-5">
                                 <div class="fs-5" style="color: #64748b;">
-                                    <i class="bi bi-inbox fs-1 d-block mb-2" style="color: #00d285;"></i>
+                                    <i class="bi bi-inbox fs-1 d-block mb-2" style="color: #10b981;"></i>
                                     Tidak ada item produk dalam transaksi ini.
                                 </div>
                             </td>
@@ -258,7 +260,7 @@
             </div>
 
             <div class="card-footer bg-transparent border-0 py-4 px-4 text-end">
-                <a href="{{ route('penjualan.index') }}" class="btn btn-action-green px-4 py-2">
+                <a href="{{ route('penjualan.index') }}" class="btn btn-teal px-4 py-2">
                     Kembali ke Daftar Penjualan
                 </a>
             </div>

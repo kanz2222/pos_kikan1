@@ -7,68 +7,105 @@
 @include('layouts.navbar')
 
 <style>
+    /* Latar Belakang Gelap Mulus Sesuai Foto (Dark Teal ke Dark Purple) */
     body {
-        background: linear-gradient(135deg, #064e3b 0%, #065f46 35%, #1e1b4b 70%, #0f172a 100%);
+        background: radial-gradient(circle at 15% 30%, #0d383b 0%, #0f172a 50%, #2a1835 100%);
+        background-size: cover;
         background-attachment: fixed;
         color: #f8fafc;
+        min-height: 100vh;
+        overflow-x: hidden;
     }
 
     .page-wrapper {
-        background: linear-gradient(135deg, #064e3b 0%, #065f46 35%, #1e1b4b 70%, #0f172a 100%);
-        background-attachment: fixed;
+        position: relative;
         min-height: 100vh;
         padding: 2.5rem 0;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        z-index: 1;
     }
 
+    /* Efek Pendar Cahaya Lembut */
+    .page-wrapper::before,
+    .page-wrapper::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.25;
+        z-index: -1;
+    }
+
+    .page-wrapper::before {
+        width: 450px;
+        height: 450px;
+        background: #0d9488;
+        top: 10%;
+        left: -100px;
+    }
+
+    .page-wrapper::after {
+        width: 500px;
+        height: 500px;
+        background: #7e22ce;
+        bottom: 10%;
+        right: -100px;
+    }
+
+    /* Hero Banner Utama */
     .hero-banner {
-        background: rgba(13, 19, 33, 0.9);
-        border: 1px solid rgba(52, 211, 153, 0.2);
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
         color: #f8fafc;
         padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         margin-bottom: 2.5rem;
-        backdrop-filter: blur(12px);
         position: relative;
         overflow: hidden;
     }
 
+    /* Garis Aksen Gradien Halus di Atas Card */
     .hero-banner::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #10b981 0%, #6366f1 50%, #ec4899 100%);
+        height: 3px;
+        background: linear-gradient(90deg, #f97316, #10b981, #06b6d4, #8b5cf6);
     }
 
+    /* Card & Search Box */
     .custom-card {
-        border: 1px solid rgba(52, 211, 153, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        background: rgba(13, 19, 33, 0.92);
-        backdrop-filter: blur(8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        background: #0f172a;
         overflow: hidden;
-        transition: all 0.25s ease-in-out;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .custom-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(16, 185, 129, 0.5);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.15);
+        transform: translateY(-2px);
+        border-color: rgba(20, 184, 166, 0.4);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5);
     }
 
     .search-box {
-        background: rgba(13, 19, 33, 0.92);
-        border: 1px solid rgba(52, 211, 153, 0.2);
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /* Table Styling Overrides (Fix Background Putih Bootstrap) */
+    .search-box:focus-within {
+        border-color: rgba(20, 184, 166, 0.5);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Table Custom Styling */
     .table-custom {
         --bs-table-bg: transparent !important;
         --bs-table-accent-bg: transparent !important;
@@ -101,7 +138,7 @@
     }
 
     .table-custom tbody tr:hover {
-        background-color: rgba(19, 27, 46, 0.8) !important;
+        background-color: rgba(255, 255, 255, 0.04) !important;
     }
 
     .table-custom td {
@@ -111,45 +148,46 @@
         color: #e2e8f0 !important;
     }
 
+    /* Avatar, Badges & Buttons */
     .avatar-initial {
         width: 40px;
         height: 40px;
-        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        background: linear-gradient(135deg, #0d9488 0%, #10b981 100%);
         color: white;
         font-weight: bold;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
     }
 
     .badge-role {
-        background: rgba(16, 185, 129, 0.15);
-        color: #34d399;
-        border: 1px solid rgba(16, 185, 129, 0.3);
+        background: rgba(13, 148, 136, 0.15);
+        color: #2dd4bf;
+        border: 1px solid rgba(13, 148, 136, 0.3);
         padding: 5px 12px;
         border-radius: 6px;
         font-weight: 700;
         font-size: 0.8rem;
+        display: inline-block;
     }
 
     .btn-create {
-        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        background: #10b981;
         color: #ffffff;
         font-weight: 700;
         border-radius: 8px;
         border: none;
         padding: 0.75rem 1.5rem;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease;
     }
 
     .btn-create:hover {
-        background: linear-gradient(135deg, #047857 0%, #059669 100%);
+        background: #059669;
         color: #ffffff;
         transform: translateY(-1px);
-        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
     }
 
     .btn-edit-custom {
@@ -160,13 +198,12 @@
         border-radius: 6px;
         padding: 5px 12px;
         font-size: 0.8rem;
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease;
     }
 
     .btn-edit-custom:hover {
         background-color: #d97706;
         color: #ffffff;
-        border-color: #d97706;
     }
 
     .btn-delete-custom {
@@ -177,19 +214,18 @@
         border-radius: 6px;
         padding: 5px 12px;
         font-size: 0.8rem;
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease;
     }
 
     .btn-delete-custom:hover {
         background-color: #dc2626;
         color: #ffffff;
-        border-color: #dc2626;
     }
 
-    /* Styling Komponen Pagination */
+    /* Pagination */
     .pagination .page-link {
-        background-color: rgba(11, 19, 41, 0.8) !important;
-        border-color: rgba(52, 211, 153, 0.2) !important;
+        background-color: #0b1329 !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
         color: #94a3b8 !important;
     }
 
@@ -198,17 +234,6 @@
         border-color: #10b981 !important;
         color: #ffffff !important;
     }
-
-    .pagination .page-link:hover {
-        background-color: rgba(16, 185, 129, 0.2) !important;
-        color: #34d399 !important;
-    }
-
-    .pagination .page-item.disabled .page-link {
-        background-color: rgba(11, 19, 41, 0.4) !important;
-        color: #475569 !important;
-        border-color: rgba(255, 255, 255, 0.05) !important;
-    }
 </style>
 
 <div class="page-wrapper">
@@ -216,7 +241,7 @@
         
         <div class="hero-banner p-4 p-md-5 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div>
-                <span class="badge px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+                <span class="badge px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm" style="background: rgba(13, 148, 136, 0.15); color: #2dd4bf; border: 1px solid rgba(13, 148, 136, 0.3);">
                     <i class="bi bi-shield-lock-fill me-1"></i> Manajemen Pengguna POS
                 </span>
                 <h1 class="display-6 fw-bold mb-1 text-white">Halaman Akun</h1>
@@ -240,11 +265,11 @@
                         style="background-color: #0b1329 !important; color: #f8fafc;"
                         placeholder="Cari nama atau email akun..."
                     >
-                    <button class="btn btn-primary px-4 fw-semibold" type="submit" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none;">
+                    <button class="btn btn-primary px-4 fw-semibold" type="submit" style="background: #10b981; border: none;">
                         <i class="bi bi-search me-1"></i> Cari
                     </button>
                     @if(request('search'))
-                        <a href="{{ route('admin.users') }}" class="btn px-3 d-flex align-items-center" style="background: rgba(255, 255, 255, 0.08); color: #f8fafc; border: 1px solid rgba(255, 255, 255, 0.2);">
+                        <a href="{{ route('admin.users') }}" class="btn px-3 d-flex align-items-center" style="background: rgba(255, 255, 255, 0.08); color: #f8fafc; border: 1px solid rgba(255, 255, 255, 0.15);">
                             Reset
                         </a>
                     @endif
@@ -311,7 +336,7 @@
                 </table>
             </div>
 
-            <div class="card-footer bg-transparent border-0 py-4 px-4" style="border-color: rgba(255, 255, 255, 0.08) !important;">
+            <div class="card-footer bg-transparent border-0 py-4 px-4">
                 <div class="d-flex justify-content-center justify-content-md-end">
                     {{ $users->withQueryString()->links() }}
                 </div>

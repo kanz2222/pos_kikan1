@@ -6,6 +6,9 @@
     <title>@yield('title')</title>
     <!-- memanggil link bootstraps -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- TAMBAHKAN BARIS INI: untuk menangkap @push('styles') dari halaman view -->
+    @stack('styles')
 </head>
 <body>
 

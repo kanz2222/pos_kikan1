@@ -21,7 +21,7 @@
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    /* Hero Banner */
+    /* Hero Banner Base Style & Animations */
     .hero-banner-pos {
         background: #0f172a;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -33,8 +33,10 @@
         backdrop-filter: blur(12px);
         position: relative;
         overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Animasi Bar Gradasi Atas */
     .hero-banner-pos::before {
         content: '';
         position: absolute;
@@ -43,6 +45,14 @@
         right: 0;
         height: 4px;
         background: linear-gradient(90deg, #10b981 0%, #06b6d4 50%, #ec4899 100%);
+        background-size: 200% 100%;
+        animation: gradientShift 6s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
 
     .hero-banner-pos h1 {
@@ -56,41 +66,61 @@
     /* Custom Cards */
     .custom-card {
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 14px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         background: #0f172a;
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(12px);
         overflow: hidden;
-        transition: all 0.25s ease-in-out;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .custom-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981 0%, #06b6d4 50%, #ec4899 100%);
+        background-size: 200% 100%;
+        animation: gradientShift 6s ease infinite;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
     }
 
     .custom-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(16, 185, 129, 0.4);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
+        transform: translateY(-5px);
+        border-color: rgba(16, 185, 129, 0.5);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .custom-card:hover::before {
+        opacity: 1;
     }
 
     .custom-card .card-header {
-        background-color: #0f172a !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        background-color: transparent !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
 
     .custom-card .card-header h5 {
         color: #ffffff !important;
     }
 
-    /* Items / Catalog */
+    /* Items / Catalog Animation */
     .product-item-card {
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        transition: all 0.2s ease;
+        border-radius: 12px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         background: #1e293b;
     }
 
     .product-item-card:hover {
         border-color: #10b981;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+        transform: translateY(-2px);
+        background: #243347;
     }
 
     .product-img {
@@ -99,12 +129,17 @@
         object-fit: cover;
         border-radius: 50%;
         box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .product-item-card:hover .product-img {
+        transform: scale(1.08);
     }
 
     /* Tables */
     .table-cart {
         color: #f8fafc;
-        background-color: #0f172a !important;
+        background-color: transparent !important;
     }
 
     .table-cart thead {
@@ -124,7 +159,7 @@
     .table-cart td {
         border-color: rgba(255, 255, 255, 0.05) !important;
         color: #e2e8f0 !important;
-        background-color: #0f172a !important;
+        background-color: transparent !important;
     }
 
     .total-display {
@@ -142,14 +177,14 @@
         border-radius: 8px;
         padding: 0.75rem 1.5rem;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        transition: all 0.2s ease-in-out;
+        transition: all 0.25s ease-in-out;
     }
 
     .btn-checkout:hover {
         background: #059669;
         color: #ffffff;
-        transform: translateY(-1px);
-        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
     }
 
     .search-input {
@@ -158,6 +193,7 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         background-color: #1e293b;
         color: #ffffff;
+        transition: all 0.25s ease;
     }
 
     .search-input:focus {
@@ -175,6 +211,7 @@
         background-color: #1e293b !important;
         border-color: rgba(255, 255, 255, 0.1) !important;
         color: #ffffff !important;
+        transition: all 0.25s ease;
     }
 
     .form-control:focus, .form-select:focus {
@@ -183,8 +220,8 @@
     }
 
     .card-footer {
-        background-color: #0f172a !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        background-color: transparent !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
 
     .text-dark {
@@ -250,7 +287,12 @@
                     <div class="card-body px-4 py-3" style="max-height: 60vh; overflow-y: auto;">
                         <div class="d-flex flex-column gap-2">
                             @forelse($products as $product)
-                            <form method="POST" action="{{ route('itempenjualan.store') }}" class="product-item-card p-2">
+                            @php
+                                $isOutOfStock = $product->stok <= 0;
+                                $isDisabled = $sale->status === 'COMPLETED' || $isOutOfStock;
+                            @endphp
+
+                            <form method="POST" action="{{ route('itempenjualan.store') }}" class="product-item-card p-2 {{ $isOutOfStock ? 'opacity-50' : '' }}" style="{{ $isOutOfStock ? 'filter: grayscale(100%);' : '' }}">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
@@ -267,17 +309,28 @@
                                             <div>
                                                 <div class="fw-bold small text-light">{{ $product->nama }}</div>
                                                 <div class="text-primary small fw-semibold">Rp {{ number_format($product->harga_jual, 0, ',', '.') }}</div>
+                                                @if($isOutOfStock)
+                                                    <span class="badge bg-danger mt-1" style="font-size: 0.65rem;">Stok Habis</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-3">
-                                        <input type="number" name="quantity" value="1" min="1"
-                                               class="form-control form-control-sm text-center {{ $sale->status === 'COMPLETED' ? 'readonly' : '' }}">
+                                        <input type="number" name="quantity" 
+                                               value="{{ $isOutOfStock ? 0 : 1 }}" 
+                                               min="{{ $isOutOfStock ? 0 : 1 }}"
+                                               max="{{ $product->stok }}"
+                                               class="form-control form-control-sm text-center {{ $isDisabled ? 'readonly' : '' }}"
+                                               {{ $isDisabled ? 'disabled' : '' }}>
                                     </div>
 
                                     <div class="col-2">
-                                        <button class="btn btn-sm w-100 fw-bold {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}" style="background: #10b981; color: #000; border: none;" title="Tambah ke Keranjang">
+                                        <button type="submit" 
+                                                class="btn btn-sm w-100 fw-bold {{ $isDisabled ? 'disabled' : '' }}" 
+                                                style="background: {{ $isOutOfStock ? '#6c757d' : '#10b981' }}; color: #000; border: none;" 
+                                                title="{{ $isOutOfStock ? 'Stok Habis' : 'Tambah ke Keranjang' }}"
+                                                {{ $isDisabled ? 'disabled' : '' }}>
                                             <i class="bi bi-plus-lg"></i>
                                         </button>
                                     </div>
@@ -285,7 +338,7 @@
                             </form>
                             @empty
                             <div class="text-center py-5 text-muted">
-                                <i class="bi bi-box-seam fs-1 d-mb-2 text-primary"></i>
+                                <i class="bi bi-box-seam fs-1 d-block mb-2 text-primary"></i>
                                 <p class="mb-0">Produk tidak ditemukan.</p>
                             </div>
                             @endforelse
@@ -358,13 +411,11 @@
 
                     <div class="card-footer border-0 p-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-muted fw-semibold">Total Pembayaran:</span>
+                            <span class="text-white fw-semibold"">Total Pembayaran:</span>
                             <span class="total-display">Rp {{ number_format($sale->total_pembayaran, 0, ',', '.') }}</span>
                         </div>
 
-                        <form method="POST" 
-                              action="{{ route('penjualan.update', $sale->id) }}"
-                              onsubmit="return confirm('Yakin ingin memproses checkout transaksi ini?')">
+                        <form id="checkoutForm" method="POST" action="{{ route('penjualan.update', $sale->id) }}">
                             @csrf
                             @method('PUT')
                             
@@ -376,7 +427,10 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-checkout w-100 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
+                            <button type="button" 
+                                    onclick="confirmCheckout()" 
+                                    class="btn btn-checkout w-100 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}"
+                                    {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}>
                                 <i class="bi bi-check-circle-fill me-1"></i> Selesaikan Checkout
                             </button>
                         </form>
@@ -401,4 +455,38 @@
     </div>
 </div>
 
+<!-- Library SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmCheckout() {
+        const form = document.getElementById('checkoutForm');
+        const paymentSelect = form.querySelector('select[name="payment_method"]');
+
+        if (!paymentSelect.value) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                text: 'Harap pilih metode pembayaran terlebih dahulu!',
+                confirmButtonColor: '#10b981'
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: 'Konfirmasi Transaksi',
+            text: 'Yakin ingin memproses checkout transaksi ini?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#10b981',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, Proses!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
 @endsection

@@ -50,28 +50,26 @@
 
 <!-- Custom Modern Vibrant Dark Palette with Black-Emerald Accents Theme Styling for Navbar -->
 <style>
-    /* Modern Gradient Navbar Styling */
+    /* Modern Solid Dark Navbar Styling - High Contrast */
     .navbar-custom {
-        background: linear-gradient(135deg, rgba(6, 78, 59, 0.95) 0%, rgba(6, 95, 70, 0.95) 35%, rgba(30, 27, 75, 0.95) 70%, rgba(15, 23, 42, 0.95) 100%) !important;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(52, 211, 153, 0.2);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        /* Menggunakan warna solid (tanpa alpha/transparansi) agar warna merah background tidak menembus */
+        background: #0f172a !important; /* Slate gelap solid */
+        border-bottom: 2px solid #10b981; /* Border bawah emerald terang */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         padding-top: 10px;
         padding-bottom: 10px;
         position: relative;
     }
 
-    /* Accent bottom border effect */
+    /* Accent bottom border gradient */
     .navbar-custom::after {
         content: '';
         position: absolute;
-        bottom: -1px;
+        bottom: -2px;
         left: 0;
         right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #10b981 0%, #6366f1 50%, #ec4899 100%);
-        opacity: 0.9;
+        height: 3px;
+        opacity: 1;
     }
 
     /* Brand & Logo */
@@ -79,81 +77,89 @@
         color: #ffffff !important;
         font-weight: 800;
         letter-spacing: 0.75px;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         text-transform: uppercase;
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    /* Link Navigasi */
+    .navbar-custom .navbar-brand i {
+        color: #34d399 !important; /* Warna ikon brand emerald terang */
+    }
+
+    /* Link Navigasi Non-Aktif (Ditingkatkan ke Putih Murni agar Jelas) */
     .navbar-custom .navbar-nav .nav-link {
-        color: rgba(248, 250, 252, 0.8) !important;
+        color: #ffffff !important;
         transition: all 0.2s ease-in-out;
         border-radius: 8px;
         padding: 8px 16px;
-        margin: 0 2px;
-        font-weight: 600;
+        margin: 0 3px;
+        font-weight: 700;
         font-size: 0.875rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         display: flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.5rem;
+        opacity: 0.85;
     }
 
-    /* Hover & Active State */
+    /* Hover State */
     .navbar-custom .navbar-nav .nav-link:hover {
         color: #ffffff !important;
-        background-color: rgba(16, 185, 129, 0.15);
+        background-color: rgba(16, 185, 129, 0.25);
+        opacity: 1;
     }
 
+    /* Active State (Sangat Kontras dengan Background Emerald Terang) */
     .navbar-custom .navbar-nav .nav-link.active {
-        color: #34d399 !important;
-        background-color: rgba(16, 185, 129, 0.2);
-        border: 1px solid rgba(16, 185, 129, 0.4);
-        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        color: #ffffff !important;
+        background-color: #059669 !important; /* Emerald solid */
+        border: 1px solid #34d399;
+        box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+        opacity: 1;
     }
 
     /* Mobile Hamburger Button */
     .navbar-custom .navbar-toggler {
-        border: 1px solid rgba(52, 211, 153, 0.3);
+        border: 1px solid #34d399;
         border-radius: 8px;
         padding: 6px 12px;
-        background-color: rgba(16, 185, 129, 0.1);
+        background-color: #064e3b;
     }
 
     .navbar-custom .navbar-toggler:focus {
-        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 0 0 2px #34d399;
     }
 
     .navbar-custom .navbar-toggler-icon {
         filter: brightness(0) invert(1);
     }
 
-    /* Logout Button */
+    /* Logout Button - Kontras Tinggi (Merah Terang Solid) */
     .navbar-custom .btn-logout {
-        background-color: rgba(239, 68, 68, 0.15);
-        color: #f87171;
+        background-color: #dc2626; /* Merah solid */
+        color: #ffffff !important;
         font-weight: 700;
         border-radius: 8px;
         padding: 8px 18px;
         transition: all 0.2s ease-in-out;
-        border: 1px solid rgba(239, 68, 68, 0.3);
+        border: 1px solid #f87171;
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         display: flex;
         align-items: center;
         gap: 0.4rem;
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
     }
 
     .navbar-custom .btn-logout:hover {
-        background-color: #dc2626;
-        color: #ffffff;
-        border-color: #dc2626;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+        background-color: #b91c1c;
+        color: #ffffff !important;
+        border-color: #ef4444;
+        box-shadow: 0 4px 14px rgba(220, 38, 38, 0.6);
         transform: translateY(-1px);
     }
 

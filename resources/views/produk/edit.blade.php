@@ -7,82 +7,110 @@
 @include('layouts.navbar')
 
 <style>
+    /* Latar Belakang Gelap Mulus Sesuai Halaman User & Index Produk */
     body {
-        background: linear-gradient(135deg, #0d322b 0%, #0f172a 50%, #1e1b4b 100%);
+        background: radial-gradient(circle at 15% 30%, #0d383b 0%, #0f172a 50%, #2a1835 100%);
+        background-size: cover;
         background-attachment: fixed;
         color: #f8fafc;
+        min-height: 100vh;
+        overflow-x: hidden;
     }
 
     .page-wrapper {
-        background: linear-gradient(135deg, #0d322b 0%, #0f172a 50%, #1e1b4b 100%);
-        background-attachment: fixed;
+        position: relative;
         min-height: 100vh;
         padding: 2.5rem 0;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        z-index: 1;
     }
 
-    /* Hero Banner */
+    /* Efek Pendar Cahaya Lembut */
+    .page-wrapper::before,
+    .page-wrapper::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.25;
+        z-index: -1;
+    }
+
+    .page-wrapper::before {
+        width: 450px;
+        height: 450px;
+        background: #0d9488;
+        top: 10%;
+        left: -100px;
+    }
+
+    .page-wrapper::after {
+        width: 500px;
+        height: 500px;
+        background: #7e22ce;
+        bottom: 10%;
+        right: -100px;
+    }
+
+    /* Hero Banner Utama */
     .hero-banner-form {
         background: #0f172a;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
-        color: #ffffff;
+        color: #f8fafc;
         padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         margin-bottom: 2.5rem;
-        backdrop-filter: blur(12px);
         position: relative;
         overflow: hidden;
     }
 
+    /* Garis Aksen Gradien Halus di Atas Card */
     .hero-banner-form::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #10b981 0%, #06b6d4 50%, #ec4899 100%);
+        height: 3px;
+        background: linear-gradient(90deg, #f97316, #10b981, #06b6d4, #8b5cf6);
     }
 
-    .hero-banner-form h1 {
-        color: #ffffff !important;
-    }
-
-    .hero-banner-form p {
-        color: #94a3b8 !important;
+    .badge-tag-header {
+        background: rgba(13, 148, 136, 0.15) !important;
+        color: #2dd4bf !important;
+        border: 1px solid rgba(13, 148, 136, 0.3);
     }
 
     /* Card Container */
     .custom-card {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 14px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        background: #0f172a;
-        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        background: #0f172a !important;
         overflow: hidden;
-        transition: all 0.25s ease-in-out;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .custom-card:hover {
-        border-color: rgba(16, 185, 129, 0.4);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
+        border-color: rgba(20, 184, 166, 0.4);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5);
     }
 
-    /* Form Inputs & Labels */
+    /* Form Inputs & Labels Style */
     .form-control, .form-select {
-        border-radius: 10px;
+        border-radius: 8px;
         padding: 0.75rem 1rem;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        background-color: #1e293b !important;
-        color: #ffffff !important;
+        background-color: #0b1329 !important;
+        color: #f8fafc !important;
         transition: all 0.2s ease;
     }
 
     .form-control:focus, .form-select:focus {
         border-color: #10b981 !important;
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
-        background-color: #1e293b !important;
+        background-color: #0b1329 !important;
         color: #ffffff !important;
     }
 
@@ -97,43 +125,55 @@
         margin-bottom: 0.5rem;
     }
 
-    /* Buttons */
+    /* Buttons Style */
     .btn-submit-custom {
         background: #10b981;
         border: none;
-        color: #000000;
+        color: #ffffff;
         font-weight: 700;
-        border-radius: 50px;
-        padding: 0.6rem 2rem;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease;
     }
 
     .btn-submit-custom:hover {
         background: #059669;
         color: #ffffff;
         transform: translateY(-1px);
-        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
     }
 
     .btn-back-custom {
-        background: #1e293b;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #94a3b8;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #cbd5e1;
         font-weight: 600;
-        border-radius: 50px;
-        padding: 0.6rem 2rem;
-        transition: all 0.2s ease-in-out;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        transition: all 0.2s ease;
     }
 
     .btn-back-custom:hover {
-        background: #334155;
+        background: rgba(255, 255, 255, 0.15);
         color: #ffffff;
-        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-outline-back {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #f8fafc;
+        border-radius: 8px;
+        padding: 0.5rem 1.25rem;
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline-back:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
     }
 
     .border-top {
-        border-color: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
     }
 </style>
 
@@ -142,14 +182,14 @@
         
         <div class="hero-banner-form p-4 p-md-4 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
             <div>
-                <span class="badge px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm" style="background: #10b981; color: #000000;">
-                    <i class="bi bi-box-seam me-1"></i> Manajemen Persediaan
+                <span class="badge badge-tag-header px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm">
+                    <i class="bi bi-box-seam me-1"></i> Manajemen Inventaris POS
                 </span>
-                <h1 class="h3 fw-bold mb-1">Edit Produk</h1>
-                <p class="mb-0 small">Perbarui informasi data produk: <strong class="text-emerald" style="color: #10b981;">{{ $produk->nama }}</strong></p>
+                <h1 class="h3 fw-bold mb-1 text-white">Edit Produk</h1>
+                <p class="mb-0 small" style="color: #94a3b8 !important;">Perbarui informasi data produk: <strong style="color: #2dd4bf;">{{ $produk->nama }}</strong></p>
             </div>
             <div class="mt-3 mt-md-0">
-                <a href="{{ route('produk.index') }}" class="btn btn-outline-light rounded-pill px-4 fw-bold shadow-sm">
+                <a href="{{ route('produk.index') }}" class="btn btn-outline-back fw-bold shadow-sm">
                     <i class="bi bi-arrow-left me-1"></i> Kembali
                 </a>
             </div>
