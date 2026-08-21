@@ -17,11 +17,13 @@
             <i class="bi bi-grid-1x2-fill"></i> Halaman Utama
           </a>
         </li>
+        @if(auth()->check() && strtolower(auth()->user()->role->name) === 'admin')
         <li class="nav-item">
           <a class="nav-link {{ Request::is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
             <i class="bi bi-people-fill"></i> Akun
           </a>
         </li>
+        @endif
         <li class="nav-item">
           <a class="nav-link {{ Request::is('produk*') ? 'active' : '' }}" href="{{ route('produk.index') }}">
             <i class="bi bi-box-seam-fill"></i> Produk

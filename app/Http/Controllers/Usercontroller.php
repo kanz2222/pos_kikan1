@@ -54,7 +54,7 @@ class Usercontroller extends Controller
 
         User::create($data);
 
-        return redirect()->route('admin.users')->with('success', 'User berhasil dibuat');
+        return redirect()->route('admin.users')->with('success', 'Akun berhasil dibuat');
     }
 
     /**
@@ -92,7 +92,7 @@ class Usercontroller extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users.edit', $user->id)->with('success', 'User update');
+        return redirect()->route('admin.users.edit', $user->id)->with('success', 'Akun berhasil di update');
     }
 
     /**

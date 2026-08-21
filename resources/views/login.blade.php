@@ -32,7 +32,7 @@
     }
 
     .speech-bubble {
-        background: #0f172a; /* Warna disesuaikan dengan background dark slate */
+        background: #0f172a;
         color: #ffffff;
         font-weight: 600;
         font-size: 0.825rem;
@@ -121,38 +121,37 @@
     .login-title {
         font-size: 1.4rem;
         font-weight: 800;
-        color: #0f172a; /* Hitam pekat tajam */
+        color: #0f172a;
         letter-spacing: -0.02em;
     }
 
     .login-subtitle {
         font-size: 0.85rem;
-        color: #475569; /* Abu gelap berteks jelas */
+        color: #475569;
         font-weight: 500;
     }
 
     .form-label {
         font-weight: 700;
-        color: #1e293b; /* Sangat kontras */
+        color: #1e293b;
         font-size: 0.725rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
-    /* Penyesuaian Kontras Input Field & Teks */
     .form-control {
         background-color: #f8fafc;
-        border: 1.5px solid #cbd5e1; /* Border lebih tegas & jelas */
+        border: 1.5px solid #cbd5e1;
         border-radius: 10px;
         padding: 0.7rem 0.9rem;
         font-size: 0.9rem;
-        color: #0f172a !important; /* Warna teks isi tajam */
+        color: #0f172a !important;
         font-weight: 500;
         transition: all 0.2s;
     }
 
     .form-control::placeholder {
-        color: #64748b; /* Placeholder lebih gelap agar gampang dibaca */
+        color: #64748b;
         opacity: 1;
     }
 
@@ -163,7 +162,6 @@
         outline: none;
     }
 
-    /* Tombol Utama - Menggunakan Warna Background Slate */
     .btn-submit {
         background: #0f172a;
         border: none;
@@ -247,14 +245,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const bubble = document.getElementById('speechBubble');
     const form = document.getElementById('loginForm');
 
-    pwd?.addEventListener('focus', () => { svg.classList.add('peeking'); bubble.innerText = "Gak ngintip kok!"; });
-    pwd?.addEventListener('blur', () => { svg.classList.remove('peeking'); bubble.innerText = "Halo! Silakan masuk ya"; });
+    pwd?.addEventListener('focus', () => { 
+        svg?.classList.add('peeking'); 
+        if (bubble) bubble.innerText = "Gak ngintip kok!"; 
+    });
+    
+    pwd?.addEventListener('blur', () => { 
+        svg?.classList.remove('peeking'); 
+        if (bubble) bubble.innerText = "Halo! Silakan masuk ya"; 
+    });
 
-    @if ($errors->any())
+    const hasErrors = @json($errors->any());
+    if (hasErrors) {
         avatar?.classList.add('shake-error');
         bubble?.classList.add('error-mode');
         if (bubble) bubble.innerText = "Waduh, akun tidak ditemukan! ❌";
-    @endif
+    }
 
     form?.addEventListener('submit', () => {
         avatar?.classList.add('jump-submit');

@@ -21,5 +21,10 @@ class PenjualanPolicy
         return $user->role->name === 'admin'
         && $penjualan->status === 'OPEN';
     }
+
+    public function update(User $user, Penjualan $penjualan): bool
+    {
+        return $penjualan->status === 'OPEN'; 
+    }
 }
 
