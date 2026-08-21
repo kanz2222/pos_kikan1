@@ -6,8 +6,8 @@
 
 <style>
     body {
-        /* Background netral & bernuansa modern dark slate */
-        background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        /* Gradien menyesuaikan latar foto: Teal gelap di kiri-atas, Ungu di kanan-bawah */
+        background: linear-gradient(135deg, #102d33 0%, #171d32 45%, #251b35 100%);
         min-height: 100vh;
         margin: 0;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -32,14 +32,14 @@
     }
 
     .speech-bubble {
-        background: #0f172a;
+        background: #0d1322;
         color: #ffffff;
         font-weight: 600;
         font-size: 0.825rem;
         padding: 0.4rem 0.95rem;
         border-radius: 20px;
         margin-bottom: 8px;
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.5);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
         border: 1px solid rgba(255, 255, 255, 0.1);
         position: relative;
         transition: all 0.3s ease;
@@ -53,7 +53,7 @@
         transform: translateX(-50%);
         border-width: 5px 5px 0;
         border-style: solid;
-        border-color: #0f172a transparent;
+        border-color: #0d1322 transparent;
     }
 
     .speech-bubble.error-mode {
@@ -71,7 +71,7 @@
         border-radius: 50%;
         background: #ffffff;
         padding: 3px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         animation: floatMascot 3s ease-in-out infinite alternate;
     }
 
@@ -84,7 +84,7 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background: #f8fafc;
+        background: #171d32;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -111,10 +111,10 @@
     .login-card {
         width: 100%;
         max-width: 23rem;
-        border: none;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 20px;
         background: #ffffff;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         padding: 2.2rem 1.8rem 1.8rem;
     }
 
@@ -157,8 +157,8 @@
 
     .form-control:focus {
         background-color: #ffffff;
-        border-color: #0f172a;
-        box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.15);
+        border-color: #10b981;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
         outline: none;
     }
 
@@ -176,8 +176,8 @@
     }
 
     .btn-submit:hover {
-        background: #1e293b;
-        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.45);
+        background: #10b981;
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
         transform: translateY(-1px);
     }
 
@@ -192,17 +192,16 @@
 
 <div class="login-wrapper">
     <div class="welcomer-container">
-        <div class="speech-bubble" id="speechBubble">Halo! Silakan masuk ya</div>
         <div class="avatar-wrapper" id="avatarWrapper">
             <div class="avatar-img">
                 <svg id="characterSvg" width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="10" r="6" fill="#0f172a"/>
-                    <circle class="eye" cx="10" cy="9" r="0.8" fill="#ffffff"/>
-                    <circle class="eye" cx="14" cy="9" r="0.8" fill="#ffffff"/>
-                    <path class="closed-eye" d="M9 9.5C9.5 10 10.5 10 11 9.5" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" style="opacity:0;"/>
-                    <path class="closed-eye" d="M13 9.5C13.5 10 14.5 10 15 9.5" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" style="opacity:0;"/>
-                    <path id="mouth" d="M10 12C11 13 13 13 14 12" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round"/>
-                    <path d="M5 21C5 17.5 8 15 12 15C16 15 19 17.5 19 21" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="10" r="6" fill="#ffffff"/>
+                    <circle class="eye" cx="10" cy="9" r="0.8" fill="#171d32"/>
+                    <circle class="eye" cx="14" cy="9" r="0.8" fill="#171d32"/>
+                    <path class="closed-eye" d="M9 9.5C9.5 10 10.5 10 11 9.5" stroke="#171d32" stroke-width="0.8" stroke-linecap="round" style="opacity:0;"/>
+                    <path class="closed-eye" d="M13 9.5C13.5 10 14.5 10 15 9.5" stroke="#171d32" stroke-width="0.8" stroke-linecap="round" style="opacity:0;"/>
+                    <path id="mouth" d="M10 12C11 13 13 13 14 12" stroke="#171d32" stroke-width="0.8" stroke-linecap="round"/>
+                    <path d="M5 21C5 17.5 8 15 12 15C16 15 19 17.5 19 21" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
                 </svg>
             </div>
         </div>
@@ -216,7 +215,7 @@
             @csrf
             <div class="mb-3 text-start">
                 <label for="email" class="form-label mb-1">Alamat Email</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="nama@email.com" value="{{ old('email') }}" required>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Masukan Email" value="{{ old('email') }}" required>
                 @error('email')
                     <span class="badge-error"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</span>
                 @enderror
@@ -224,7 +223,7 @@
             
             <div class="mb-4 text-start">
                 <label for="password" class="form-label mb-1">Kata Sandi</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="••••••••" required>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                 @error('password')
                     <span class="badge-error"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</span>
                 @enderror
@@ -246,26 +245,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById('loginForm');
 
     pwd?.addEventListener('focus', () => { 
-        svg?.classList.add('peeking'); 
-        if (bubble) bubble.innerText = "Gak ngintip kok!"; 
+        svg?.classList.add('peeking');  
     });
     
     pwd?.addEventListener('blur', () => { 
-        svg?.classList.remove('peeking'); 
-        if (bubble) bubble.innerText = "Halo! Silakan masuk ya"; 
+        svg?.classList.remove('peeking');  
     });
 
     const hasErrors = @json($errors->any());
     if (hasErrors) {
         avatar?.classList.add('shake-error');
         bubble?.classList.add('error-mode');
-        if (bubble) bubble.innerText = "Waduh, akun tidak ditemukan! ❌";
     }
 
     form?.addEventListener('submit', () => {
         avatar?.classList.add('jump-submit');
         bubble?.classList.remove('error-mode');
-        if (bubble) bubble.innerText = "Yey, sebentar ya!";
     });
 });
 </script>
