@@ -34,6 +34,12 @@
             <i class="bi bi-cart-check-fill"></i> Penjualan
           </a>
         </li>
+        <!-- Menu About -->
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('about*') ? 'active' : '' }}" href="{{ route('about') }}">
+            <i class="bi bi-info-circle-fill"></i> Tentang Saya
+          </a>
+        </li>
       </ul>
 
       <!-- Tombol Logout di Sebelah Kanan -->
