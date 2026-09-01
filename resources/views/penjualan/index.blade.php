@@ -287,21 +287,6 @@
 
 <div class="page-wrapper">
     <div class="container">
-
-        {{-- Flash Messages --}}
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show rounded-12 shadow-sm mb-4" role="alert" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3);">
-                <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-        @if(session('error') || session('errors'))
-            <div class="alert alert-danger alert-dismissible fade show rounded-12 shadow-sm mb-4" role="alert" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') ?? session('errors') }}
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         
         {{-- Hero Banner --}}
         <div class="hero-banner-sale p-4 p-md-4 mb-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
@@ -400,13 +385,13 @@
                                     @endcan
                                     
                                     @can('delete', $sale)
-                                    <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline m-0">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-action-custom btn-delete-custom" onclick="return confirm('Apakah Anda yakin ingin menghapus penjualan ini?')">
-                                            <i class="bi bi-trash-fill me-1"></i> Hapus
-                                        </button>
-                                    </form>
+                                    <button type="button" 
+                                            class="btn btn-action-custom btn-delete-custom" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteModal" 
+                                            data-url="{{ route('penjualan.destroy', $sale) }}">
+                                        <i class="bi bi-trash-fill me-1"></i> Hapus
+                                    </button>
                                     @endcan
                                 </div>
                             </td>
@@ -434,5 +419,44 @@
 
     </div>
 </div>
+
+{{-- Modal Hapus --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); color: #f8fafc; border-radius: 16px;">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                <h5 class="modal-title fw-bold text-danger d-flex align-items-center" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i> Konfirmasi Hapus
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                Apakah Anda yakin ingin menghapus penjualan ini?
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <button type="button" class="btn btn-secondary rounded-3 px-3" data-bs-dismiss="modal">Batal</button>
+                <form id="deleteForm" method="POST" action="" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger rounded-3 px-4 fw-semibold">Ya, Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteModal = document.getElementById('deleteModal');
+        if (deleteModal) {
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var url = button.getAttribute('data-url');
+                var form = document.getElementById('deleteForm');
+                form.action = url;
+            });
+        }
+    });
+</script>
 
 @endsection

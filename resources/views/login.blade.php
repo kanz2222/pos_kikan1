@@ -6,20 +6,54 @@
 
 <style>
     body {
-        /* Gradien menyesuaikan latar foto: Teal gelap di kiri-atas, Ungu di kanan-bawah */
-        background: linear-gradient(135deg, #102d33 0%, #171d32 45%, #251b35 100%);
+        /* Background dasar gelap sesuai tampilan dashboard */
+        background-color: #0f172a;
+        background: radial-gradient(circle at 15% 30%, #0d383b 0%, #0f172a 50%, #2a1835 100%);
+        background-size: cover;
+        background-attachment: fixed;
+        color: #f8fafc;
         min-height: 100vh;
         margin: 0;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        overflow-x: hidden;
     }
 
     .login-wrapper {
+        position: relative;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 1.5rem;
+        z-index: 1;
+    }
+
+    /* Efek Pendar Cahaya (Glowing Orbs) Sesuai Dashboard */
+    .login-wrapper::before,
+    .login-wrapper::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.25;
+        z-index: -1;
+    }
+
+    .login-wrapper::before {
+        width: 450px;
+        height: 450px;
+        background: #0d9488; /* Teal */
+        top: 10%;
+        left: -100px;
+    }
+
+    .login-wrapper::after {
+        width: 500px;
+        height: 500px;
+        background: #7e22ce; /* Ungu */
+        bottom: 10%;
+        right: -100px;
     }
 
     /* Maskot & Speech Bubble */

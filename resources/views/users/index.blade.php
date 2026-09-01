@@ -222,6 +222,63 @@
         color: #ffffff;
     }
 
+    /* Custom Card Confirmation Modal */
+    .custom-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(5px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .custom-modal-overlay.active {
+        display: flex;
+    }
+
+    .custom-modal-card {
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        color: #f8fafc;
+        max-width: 420px;
+        width: 90%;
+        padding: 2rem;
+        text-align: center;
+        animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .modal-icon-danger {
+        width: 64px;
+        height: 64px;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #f87171;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin: 0 auto 1.25rem auto;
+    }
+
     /* Pagination */
     .pagination .page-link {
         background-color: #0b1329 !important;
@@ -315,13 +372,11 @@
                                         <i class="bi bi-pencil-square me-1"></i> Edit
                                     </a>
                                     
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-delete-custom btn-sm" onclick="return confirm('Yakin hapus user ini?')">
-                                            <i class="bi bi-trash-fill me-1"></i> Hapus
-                                        </button>
-                                    </form>
+                                    <button type="button" 
+                                            class="btn btn-delete-custom btn-sm"
+                                            onclick="openDeleteUserModal('{{ $user->id }}', '{{ addslashes($user->name) }}')">
+                                        <i class="bi bi-trash-fill me-1"></i> Hapus
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -345,5 +400,48 @@
 
     </div>
 </div>
+
+<!-- Custom Card Confirmation Modal -->
+<div id="deleteUserModal" class="custom-modal-overlay">
+    <div class="custom-modal-card">
+        <div class="modal-icon-danger">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h4 class="fw-bold text-white mb-2">Hapus Pengguna?</h4>
+        <p class="mb-4" style="color: #94a3b8;">
+            Apakah Anda yakin ingin menghapus akun <strong id="deleteUserName" class="text-white"></strong>? Akses pengguna ini akan dicabut permanen.
+        </p>
+        
+        <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn px-4 fw-semibold" onclick="closeDeleteUserModal()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc;">
+                Batal
+            </button>
+            <form id="deleteUserForm" action="" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger px-4 fw-semibold" style="background: #dc2626; border: none;">
+                    Ya, Hapus
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openDeleteUserModal(userId, userName) {
+        document.getElementById('deleteUserName').innerText = userName;
+        
+        // Memanfaatkan helper route() bawaan Laravel agar URL destroy selalu presisi
+        let deleteUrl = "{{ route('admin.users.destroy', ':id') }}";
+        deleteUrl = deleteUrl.replace(':id', userId);
+        
+        document.getElementById('deleteUserForm').action = deleteUrl;
+        document.getElementById('deleteUserModal').classList.add('active');
+    }
+
+    function closeDeleteUserModal() {
+        document.getElementById('deleteUserModal').classList.remove('active');
+    }
+</script>
 
 @endsection

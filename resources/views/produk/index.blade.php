@@ -7,7 +7,7 @@
 @include('layouts.navbar')
 
 <style>
-    /* Latar Belakang Gelap Mulus Sesuai Halaman User (Dark Teal ke Dark Purple) */
+    /* Latar Belakang Gelap Mulus Sesuai Halaman User */
     body {
         background: radial-gradient(circle at 15% 30%, #0d383b 0%, #0f172a 50%, #2a1835 100%);
         background-size: cover;
@@ -213,6 +213,51 @@
         color: #ffffff;
     }
 
+    /* Custom Modal Popup Overlay */
+    .custom-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .custom-modal-overlay.active {
+        display: flex;
+    }
+
+    .custom-modal-box {
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        color: #f8fafc;
+        max-width: 420px;
+        width: 90%;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .modal-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #f87171;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.75rem;
+        margin: 0 auto 1rem auto;
+    }
+
     /* Pagination Styling */
     .pagination .page-link {
         background-color: #0b1329 !important;
@@ -247,17 +292,11 @@
             </div>
         </div>
 
-        {{-- ALERT SECTION --}}
-        @if(session('success'))
-            <div class="alert alert-success border-0 alert-dismissible fade show shadow-sm mb-4" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger border-0 alert-dismissible fade show shadow-sm mb-4" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
+        {{-- ALERT NOTIFIKASI ERROR GAGAL HAPUS --}}
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show border-0 mb-4 shadow-sm" role="alert" style="background-color: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4) !important; color: #fca5a5;">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Gagal!</strong> {{ session('error') }}
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -329,13 +368,11 @@
                             @endcan
                             
                             @can('delete', $product)
-                            <form action="{{ route('produk.destroy', $product) }}" method="POST" class="flex-fill">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-delete-custom btn-sm w-100 text-center" onclick="return confirm('Apakah anda yakin akan menghapus produk ini?')">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </form>
+                            <button type="button" 
+                                    class="btn btn-delete-custom btn-sm flex-fill text-center" 
+                                    onclick="openDeleteModal('{{ $product->id }}', '{{ addslashes($product->nama) }}')">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
                             @endcan
                         </div>
                     </div>
@@ -361,5 +398,42 @@
 
     </div>
 </div>
+
+<!-- Custom Popup Modal -->
+<div id="customDeleteModal" class="custom-modal-overlay">
+    <div class="custom-modal-box">
+        <div class="modal-icon-wrapper">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h4 class="fw-bold text-white mb-2">Hapus Produk?</h4>
+        <p class="mb-4" style="color: #94a3b8;">
+            Apakah Anda yakin ingin menghapus <strong id="deleteProductName" class="text-white"></strong>? Tindakan ini tidak dapat dibatalkan.
+        </p>
+        <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn px-4 fw-semibold" onclick="closeDeleteModal()" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #f8fafc;">
+                Batal
+            </button>
+            <form id="deleteForm" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger px-4 fw-semibold" style="background: #dc2626; border: none;">
+                    Ya, Hapus
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openDeleteModal(productId, productName) {
+        document.getElementById('deleteProductName').innerText = productName;
+        document.getElementById('deleteForm').action = "{{ url('produk') }}/" + productId;
+        document.getElementById('customDeleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('customDeleteModal').classList.remove('active');
+    }
+</script>
 
 @endsection

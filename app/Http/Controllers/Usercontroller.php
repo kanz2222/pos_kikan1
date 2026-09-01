@@ -70,7 +70,7 @@ class Usercontroller extends Controller
      */
     public function edit(User $user)
     {
-        $roles = role::all();
+        $roles = Role::all();
 
         return view('users.edit', compact('user', 'roles'));
     }
@@ -100,9 +100,16 @@ class Usercontroller extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        try {
+            $user->delete();
+            return back()->with('success', 'User berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Kode error 23000 adalah violation foreign key constraint
+            if ($e->getCode() == 23000) {
+                return back()->with('error', 'Gagal menghapus! User "' . $user->name . '" memiliki riwayat transaksi/penjualan.');
+            }
 
-        return back()->with('success', 'User deleted');
+            return back()->with('error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
-
