@@ -280,7 +280,7 @@
                 <span class="badge badge-hero px-3 py-1 rounded-pill fw-bold mb-2 shadow-sm">
                     <i class="bi bi-box-seam-fill me-1"></i> Manajemen Inventaris POS
                 </span>
-                <h1 class="display-6 fw-bold mb-1 text-white">Halaman Produk</h1>
+                <h1 class="display-6 fw-bold mb-1 text-white">Puma Only</h1>
                 <p class="mb-0" style="color: #94a3b8 !important;">Kelola daftar item, harga beli, harga jual, stok, dan inventaris sistem POS</p>
             </div>
             <div class="mt-3 mt-md-0">
