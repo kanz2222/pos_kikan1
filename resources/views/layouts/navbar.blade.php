@@ -1,8 +1,8 @@
 <!-- Navbar POS Core -->
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
   <div class="container px-3">
-    <!-- Mengarahkan brand ke route 'about' -->
-    <a class="navbar-brand" href="{{ route('about') }}">
+    <!-- Mengarahkan brand ke halaman profil toko (Sudah Diperbaiki) -->
+    <a class="navbar-brand" href="{{ route('profil') }}">
         <i class="bi bi-terminal-fill text-white"></i> Kanzz Store
     </a>
     
@@ -61,15 +61,14 @@
 <style>
     /* Modern Solid Dark Navbar Styling - High Contrast */
     .navbar-custom {
-        background: #0f172a !important; /* Slate gelap solid */
-        border-bottom: 2px solid #10b981; /* Border bawah emerald terang */
+        background: #0f172a !important;
+        border-bottom: 2px solid #10b981;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         padding-top: 10px;
         padding-bottom: 10px;
         position: relative;
     }
 
-    /* Accent bottom border gradient */
     .navbar-custom::after {
         content: '';
         position: absolute;
@@ -80,7 +79,6 @@
         opacity: 1;
     }
 
-    /* Brand & Logo */
     .navbar-custom .navbar-brand {
         color: #ffffff !important;
         font-weight: 800;
@@ -93,10 +91,9 @@
     }
 
     .navbar-custom .navbar-brand i {
-        color: #34d399 !important; /* Warna ikon brand emerald terang */
+        color: #34d399 !important;
     }
 
-    /* Link Navigasi Non-Aktif */
     .navbar-custom .navbar-nav .nav-link {
         color: #ffffff !important;
         transition: all 0.2s ease-in-out;
@@ -113,23 +110,20 @@
         opacity: 0.85;
     }
 
-    /* Hover State */
     .navbar-custom .navbar-nav .nav-link:hover {
         color: #ffffff !important;
         background-color: rgba(16, 185, 129, 0.25);
         opacity: 1;
     }
 
-    /* Active State */
     .navbar-custom .navbar-nav .nav-link.active {
         color: #ffffff !important;
-        background-color: #059669 !important; /* Emerald solid */
+        background-color: #059669 !important;
         border: 1px solid #34d399;
         box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
         opacity: 1;
     }
 
-    /* Mobile Hamburger Button */
     .navbar-custom .navbar-toggler {
         border: 1px solid #34d399;
         border-radius: 8px;
@@ -145,9 +139,8 @@
         filter: brightness(0) invert(1);
     }
 
-    /* Logout Button */
     .navbar-custom .btn-logout {
-        background-color: #dc2626; /* Merah solid */
+        background-color: #dc2626;
         color: #ffffff !important;
         font-weight: 700;
         border-radius: 8px;

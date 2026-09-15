@@ -19,9 +19,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Route untuk About (Mengarahkan langsung ke file profil_toko.blade.php)
+    // Route untuk Profil Toko (Sudah diperbaiki)
+    Route::get('/profil', function () {
+        return view('profil');
+    })->name('profil');
+
+    // Route untuk About (Mengarahkan ke file about.blade.php)
     Route::get('/about', function () {
-        return view('profil_toko');
+        return view('about');
     })->name('about');
 
     // Route khusus Admin
