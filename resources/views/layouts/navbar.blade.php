@@ -1,7 +1,8 @@
 <!-- Navbar POS Core -->
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
   <div class="container px-3">
-    <a class="navbar-brand" href="#">
+    <!-- Mengarahkan brand ke route 'about' -->
+    <a class="navbar-brand" href="{{ route('about') }}">
         <i class="bi bi-terminal-fill text-white"></i> Kanzz Store
     </a>
     
@@ -60,7 +61,6 @@
 <style>
     /* Modern Solid Dark Navbar Styling - High Contrast */
     .navbar-custom {
-        /* Menggunakan warna solid (tanpa alpha/transparansi) agar warna merah background tidak menembus */
         background: #0f172a !important; /* Slate gelap solid */
         border-bottom: 2px solid #10b981; /* Border bawah emerald terang */
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
@@ -96,7 +96,7 @@
         color: #34d399 !important; /* Warna ikon brand emerald terang */
     }
 
-    /* Link Navigasi Non-Aktif (Ditingkatkan ke Putih Murni agar Jelas) */
+    /* Link Navigasi Non-Aktif */
     .navbar-custom .navbar-nav .nav-link {
         color: #ffffff !important;
         transition: all 0.2s ease-in-out;
@@ -120,7 +120,7 @@
         opacity: 1;
     }
 
-    /* Active State (Sangat Kontras dengan Background Emerald Terang) */
+    /* Active State */
     .navbar-custom .navbar-nav .nav-link.active {
         color: #ffffff !important;
         background-color: #059669 !important; /* Emerald solid */
@@ -145,7 +145,7 @@
         filter: brightness(0) invert(1);
     }
 
-    /* Logout Button - Kontras Tinggi (Merah Terang Solid) */
+    /* Logout Button */
     .navbar-custom .btn-logout {
         background-color: #dc2626; /* Merah solid */
         color: #ffffff !important;
