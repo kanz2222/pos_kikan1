@@ -50,6 +50,8 @@ class PenjualanController extends Controller
             ],
             [
                 'total_pembayaran' => 0,
+                'uang_diterima' => 0,
+                'kembalian' => 0,
                 'metode_pembayaran' => 'CASH'
             ]
         );
@@ -115,33 +117,51 @@ class PenjualanController extends Controller
     public function update(Request $request, penjualan $penjualan)
     {
         $request->validate([
-    'payment_method' => 'required|in:CASH,QRIS'
-]);
+            'payment_method' => 'required|in:CASH,QRIS',
+            'uang_diterima' => [
+                'nullable',
+                'integer',
+                'min:0',
+                function ($attribute, $value, $fail) use ($request, $penjualan) {
+                    if ($request->payment_method === 'CASH') {
+                        $total = $penjualan->itemPenjualan()->sum('subtotal');
+                        if ($value === null || $value < $total) {
+                            $fail('Uang diterima tidak boleh kurang dari total pembayaran.');
+                        }
+                    }
+                },
+            ],
+        ]);
 
-if ($penjualan->status !== 'OPEN') {
-    return back()->with('errors', 'Transaksi sudah diproses');
-}
+        if ($penjualan->status !== 'OPEN') {
+            return back()->withErrors(['checkout' => 'Transaksi sudah diproses']);
+        }
 
-if ($penjualan->itemPenjualan()->count() === 0) {
-    return back()->with('errors', 'Keranjang masih kosong');
-}
+        if ($penjualan->itemPenjualan()->count() === 0) {
+            return back()->withErrors(['checkout' => 'Keranjang masih kosong']);
+        }
 
-DB::transaction(function () use ($penjualan, $request) {
+        DB::transaction(function () use ($penjualan, $request) {
+            $total = $penjualan->itemPenjualan()->sum('subtotal');
+            $uangDiterima = $request->payment_method === 'CASH'
+                ? (int) ($request->input('uang_diterima', 0) ?? 0)
+                : 0;
+            $kembalian = $request->payment_method === 'CASH'
+                ? max(0, $uangDiterima - $total)
+                : 0;
 
-    // Hitung ulang total (anti manipulasi)
-    $total = $penjualan->itemPenjualan()->sum('subtotal');
+            $penjualan->update([
+                'metode_pembayaran' => $request->payment_method,
+                'total_pembayaran'  => $total,
+                'uang_diterima'     => $uangDiterima,
+                'kembalian'         => $kembalian,
+                'status'            => 'COMPLETED'
+            ]);
+        });
 
-    $penjualan->update([
-        'metode_pembayaran' => $request->payment_method,
-        'total_pembayaran'  => $total,
-        'status'            => 'COMPLETED'
-    ]);
-});
-
-return redirect()
-    ->route('penjualan.index')
-    ->with('success', 'Transaksi berhasil diselesaikan');
-
+        return redirect()
+            ->route('penjualan.index')
+            ->with('success', 'Transaksi berhasil diselesaikan');
     }
 
     /**
@@ -155,7 +175,7 @@ return redirect()
     if ($penjualan->status !== 'OPEN') {
         return redirect()
             ->route('penjualan.index')
-            ->with('errors', 'Transaksi sudah selesai tidak bisa dibatalkan');
+            ->withErrors(['checkout' => 'Transaksi sudah selesai tidak bisa dibatalkan']);
     }
 
     DB::transaction(function () use ($penjualan) {

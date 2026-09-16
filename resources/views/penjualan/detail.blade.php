@@ -272,6 +272,21 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row mt-4 g-3">
+                    <div class="col-md-4">
+                        <div class="info-label">Metode Pembayaran</div>
+                        <div class="info-value">{{ $sale->metode_pembayaran ?? '-' }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-label">Uang Diterima</div>
+                        <div class="info-value">Rp {{ number_format($sale->uang_diterima ?? 0, 0, ',', '.') }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-label">Kembalian</div>
+                        <div class="info-value text-success">Rp {{ number_format($sale->kembalian ?? 0, 0, ',', '.') }}</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Items Table Card -->

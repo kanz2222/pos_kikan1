@@ -48,8 +48,7 @@ class ItemPenjualanController extends Controller
 
             // Cek stok
             if ($product->stok < $request->quantity) {
-                return redirect()->route('penjualan.create')->with('errors', 'Produk stok tidak 
-                mencukupi');
+                return redirect()->route('penjualan.create')->withErrors(['stok' => 'Produk stok tidak mencukupi']);
             }
 
             // Kurangi stok
@@ -120,7 +119,7 @@ class ItemPenjualanController extends Controller
             // Jika qty bertambah → kurangi stok
             if ($selisih > 0) {
                 if ($produk->stok < $selisih) {
-                    return redirect()->route('penjualan.create')->with('errors', 'Stok tidak mencukupi');
+                    return redirect()->route('penjualan.create')->withErrors(['stok' => 'Stok tidak mencukupi']);
                 }
                 $produk->decrement('stok', $selisih);
             }

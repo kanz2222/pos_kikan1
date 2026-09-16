@@ -20,9 +20,11 @@ class PenjualanFactory extends Factory
     {
         return [
             'user_id' => User::inRandomOrder()->value('id'),
-            'total_pembayaran' => 0, //akan di update di seeder
+            'total_pembayaran' => 0,
+            'uang_diterima' => 0,
+            'kembalian' => 0,
             'metode_pembayaran' => $this->faker->randomElement([
-                'CASH', 'TRANSFER', 'QRIS'
+                'CASH', 'QRIS'
             ]),
             'status' => $this->faker->randomElement(['OPEN', 'COMPLETED']),
         ];

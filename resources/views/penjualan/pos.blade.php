@@ -420,11 +420,23 @@
                             @method('PUT')
                             
                             <div class="mb-3">
-                                <select name="payment_method" class="form-select rounded-10 px-3 py-2" required>
+                                <select name="payment_method" id="payment_method" class="form-select rounded-10 px-3 py-2" required>
                                     <option value="">-- Pilih Metode Pembayaran --</option>
                                     <option value="CASH">Cash (Tunai)</option>
                                     <option value="QRIS">QRIS / Non-Tunai</option>
                                 </select>
+                            </div>
+
+                            <div class="mb-3" id="cashField" style="display: none;">
+                                <label for="uang_diterima" class="form-label text-white small fw-semibold">Uang Diterima</label>
+                                <input type="number" id="uang_diterima" name="uang_diterima" min="0" step="100" class="form-control rounded-10 px-3 py-2" placeholder="Masukkan nominal uang tunai">
+                            </div>
+
+                            <div class="mb-3" id="kembalianBox" style="display: none;">
+                                <div class="d-flex justify-content-between align-items-center rounded-10 px-3 py-2 border border-success-subtle bg-success-subtle bg-opacity-10">
+                                    <span class="text-white small fw-semibold">Kembalian</span>
+                                    <strong id="kembalianValue" class="text-success">Rp 0</strong>
+                                </div>
                             </div>
 
                             <button type="button" 
@@ -459,6 +471,40 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    const paymentMethodSelect = document.getElementById('payment_method');
+    const uangDiterimaInput = document.getElementById('uang_diterima');
+    const cashField = document.getElementById('cashField');
+    const kembalianBox = document.getElementById('kembalianBox');
+    const kembalianValue = document.getElementById('kembalianValue');
+
+    function formatRupiah(value) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(value || 0);
+    }
+
+    function updateKembalian() {
+        const paymentMethod = paymentMethodSelect.value;
+        const total = Number({{ $sale->total_pembayaran ?? 0 }});
+        const uangDiterima = Number(uangDiterimaInput.value || 0);
+
+        if (paymentMethod === 'CASH') {
+            cashField.style.display = 'block';
+            const change = Math.max(0, uangDiterima - total);
+            kembalianValue.textContent = formatRupiah(change);
+            kembalianBox.style.display = 'block';
+        } else {
+            cashField.style.display = 'none';
+            uangDiterimaInput.value = '';
+            kembalianBox.style.display = 'none';
+        }
+    }
+
+    paymentMethodSelect.addEventListener('change', updateKembalian);
+    uangDiterimaInput.addEventListener('input', updateKembalian);
+
     function confirmCheckout() {
         const form = document.getElementById('checkoutForm');
         const paymentSelect = form.querySelector('select[name="payment_method"]');
@@ -471,6 +517,21 @@
                 confirmButtonColor: '#10b981'
             });
             return;
+        }
+
+        if (paymentSelect.value === 'CASH') {
+            const total = Number({{ $sale->total_pembayaran ?? 0 }});
+            const uangDiterima = Number(uangDiterimaInput.value || 0);
+
+            if (!uangDiterima || uangDiterima < total) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Uang kurang',
+                    text: 'Uang diterima tidak boleh kurang dari total pembayaran.',
+                    confirmButtonColor: '#10b981'
+                });
+                return;
+            }
         }
 
         Swal.fire({
